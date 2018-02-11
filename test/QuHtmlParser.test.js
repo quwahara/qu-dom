@@ -1,6 +1,6 @@
   console.log('hi');
 var test = require('tape');
-var QuHtmlParser = require('../QuHtmlParser');
+var QuHtmlParser = require('../QuDOM').QuHtmlParser;
 
 test('QuHtmlParser.find', function (t) {
   var p = new QuHtmlParser();
