@@ -1,0 +1,429 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pa",
+				"parseHTML"
+			],
+			[
+				"is",
+				"isSingle"
+			],
+			[
+				"par",
+				"parts"
+			],
+			[
+				"T",
+				"TAG"
+			],
+			[
+				"sub",
+				"subparts"
+			],
+			[
+				"i",
+				"isEnd"
+			],
+			[
+				"rem",
+				"remain"
+			],
+			[
+				"re",
+				"remain"
+			],
+			[
+				"B",
+				"Body"
+			],
+			[
+				"a",
+				"attrs"
+			],
+			[
+				"isS",
+				"isSingle"
+			],
+			[
+				"attr",
+				"attrs"
+			],
+			[
+				"att",
+				"attrs"
+			],
+			[
+				"sl",
+				"slashTail"
+			],
+			[
+				"s",
+				"slash"
+			],
+			[
+				"S",
+				"SyntaxError"
+			],
+			[
+				"N",
+				"NM"
+			],
+			[
+				"ne",
+				"nextToken"
+			],
+			[
+				"te",
+				"text"
+			],
+			[
+				"th",
+				"throw"
+			],
+			[
+				"isN",
+				"isNameStart"
+			],
+			[
+				"d",
+				"doubleQuote"
+			],
+			[
+				"n",
+				"notOk"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"t",
+				"text"
+			],
+			[
+				"le",
+				"lead"
+			],
+			[
+				"fu",
+				"fun\tFunction"
+			],
+			[
+				"fo",
+				"for\tfor (…) {…}"
+			],
+			[
+				"for",
+				"for\tfor (…) {…} (Improved Native For-Loop)"
+			],
+			[
+				"de",
+				"defineProperty"
+			],
+			[
+				"p",
+				"prototype"
+			],
+			[
+				"tag",
+				"tagName"
+			],
+			[
+				"eve",
+				"eventName"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"pro",
+				"prop"
+			],
+			[
+				"at",
+				"attr"
+			],
+			[
+				"co",
+				"console"
+			],
+			[
+				"va",
+				"value"
+			],
+			[
+				"get",
+				"getAttribute"
+			],
+			[
+				"_",
+				"_innerHTML"
+			],
+			[
+				"chi",
+				"childHTMLs"
+			],
+			[
+				"child",
+				"children"
+			],
+			[
+				"r",
+				"return"
+			],
+			[
+				"ci",
+				"child"
+			],
+			[
+				"ar",
+				"args"
+			],
+			[
+				"li",
+				"listeners2"
+			],
+			[
+				"lis",
+				"listeners1"
+			],
+			[
+				"ev",
+				"eventListeners"
+			],
+			[
+				"event",
+				"addEventListener"
+			],
+			[
+				"len",
+				"length"
+			],
+			[
+				"ln",
+				"length"
+			],
+			[
+				"def",
+				"defGet"
+			],
+			[
+				"ti",
+				"this"
+			],
+			[
+				"proto",
+				"prototype"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "test/QuDOM.test.js",
+			"settings":
+			{
+				"buffer_size": 352,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/mitsuaki/git/qu-dom",
+		"/Users/mitsuaki/git/qu-dom/test"
+	],
+	"file_history":
+	[
+		"/Users/mitsuaki/git/qu-html-parser/package.json",
+		"/Users/mitsuaki/git/qu-html-parser/lib/QuHtmlParser.js",
+		"/Users/mitsuaki/git/qu-html-parser/test/QuHtmlParser.test.js",
+		"/Users/mitsuaki/git/qu-html-parser/QuHtmlParser.js",
+		"/Users/mitsuaki/git/qu-html-parser/lib/quHtmlParser.js",
+		"/Users/mitsuaki/git/rick-dom/test:RickDom.test.js",
+		"/Users/mitsuaki/git/Radio/package.json"
+	],
+	"find":
+	{
+		"height": 23.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "test/QuDOM.test.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 352,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								352,
+								352
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 35.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "qu-dom.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 191.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

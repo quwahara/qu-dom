@@ -1,0 +1,14 @@
+{
+  "name": "qu-dom",
+  "version": "0.0.1",
+  "description": "",
+  "main": "QuDOM.js",
+  "scripts": {
+    "test": "node test/QuDOM.test.js ; exit 0"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "tape": "^4.8.0"
+  }
+}
