@@ -38,6 +38,53 @@
   };
   var NT = QuDOM.NODE_TYPES;
 
+  var NamedNodeMap = QuDOM.NamedNodeMap = function NamedNodeMap() {
+    this.attrs_ = [];
+  };
+  NamedNodeMap.prototype = Object.create(Object.prototype, {
+    length: {
+      get: function () {
+        return this.attrs_.length;
+      }
+    }
+  });
+  NamedNodeMap.prototype.constructor = NamedNodeMap;
+  (function (P) {
+    P.attrs_ = null;
+    P.getNamedItem = function (name) {
+      for (var i = 0; i < this.attrs_.length; i++) {
+        var attr = this.attrs_[i];
+        if (attr.name === name) return attr;
+      }
+      return undefined;
+    };
+    P.setNamedItem = function (attr) {
+      for (var i = 0; i < this.attrs_.length; i++) {
+        var curAttr = this.attrs_[i];
+        if (curAttr.name === attr.name) {
+          this.attrs_.splice(i, 1);
+          break;
+        }
+      }
+      this.attrs_.push(attr);
+    };
+    P.removeNamedItem = function (name) {
+      for (var i = 0; i < this.attrs_.length; i++) {
+        var curAttr = this.attrs_[i];
+        if (curAttr.name === name) {
+          this.attrs_.splice(i, 1);
+          return;
+        }
+      }
+    };
+    P.item = function (index) {
+      return index < this.attrs_.length ? this.attrs_[index] : null;
+    };
+    // P.getNamedItemNS
+    // P.setNamedItemNS
+    // P.removeNamedItemNS
+  })(NamedNodeMap.prototype);
+
   var Event = QuDOM.Event = function Event(type, eventInit) {
     this.type = type;
     
@@ -98,13 +145,14 @@
 
   var Node = QuDOM.Node = function Node() {
     EventTarget.call(this);
+    this.childNodes = [];
   };
   Node.prototype = Object.create(EventTarget.prototype);
   Node.prototype.constructor = Node;
   (function (P) {
     P.baseURI = null;
     P.baseURIObject  = null;
-    P.childNodes = [];
+    P.childNodes = null;
     P.firstChild = null;
     P.lastChild = null;
     P.nextSibling = null;
@@ -120,13 +168,44 @@
     P.appendChild = function (child) {
       this.childNodes.push(child);
       return child;
-    }
+    };
   })(Node.prototype);
+
+  var Attr = QuDOM.Attr = function Attr() {
+    Node.call(this);
+  };
+  Attr.prototype = Object.create(Node.prototype);
+  Attr.prototype.constructor = Attr;
+  (function (P) {
+    P.name = null;
+    P.namespaceURI = null;
+    P.localname = null;
+    P.prefix = null;
+    P.specified = null;
+    P.value = null;
+    P.toString = function () {
+      return this.name + '="' + this.value + '"';
+    };
+  })(Attr.prototype);
 
   var Element = QuDOM.Element = function Element() {
     Node.call(this);
+    this.innerHTML_ = "";
+    this.attributes = new NamedNodeMap();
   };
-  Element.prototype = Object.create(Node.prototype);
+  Element.prototype = Object.create(Node.prototype, {
+    innerHTML: {
+      enumerable: true,
+      get: function () {
+        return this.innerHTML_;
+      },
+      set: function (value) {
+        if (this.innerHTML_ == value) return;
+        this.innerHTML_ = value;
+        this.parseHTML(this.innerHTML_);
+      },
+    }
+  });
   Element.prototype.constructor = Element;
   (function (P) {
     P.attributes = null;
@@ -158,8 +237,74 @@
     P.tagName = null;
     P.undoManager  = null;
     P.undoScope  = null;
-  })(Element.prototype);
+    P.parseHTML = function (html) {
 
+      function clearChildNodes(childNodes) {
+        for (var i = 0; i < childNodes.length; i++) {
+          clearChildNodes(childNodes[i].childNodes);
+        }
+        childNodes.splice(0, childNodes.length);
+      }
+      clearChildNodes(this.childNodes);
+
+      var parser = new QuHtmlParser(html);
+      var items = parser.parseHTML();
+      
+      var self = this;
+      function addToChildNodes(parent, item) {
+        if (item.constructor !== Tag) return;
+        var tag = item;
+        var elm = createElement(tag.name);
+        for (var i = 0; i < tag.attrs.length; i++) {
+          var attr = tag.attrs[i];
+          var attr2 = new Attr();
+          attr2.name = attr.name;
+          attr2.value = attr.value;
+          elm.attributes.setNamedItem(attr2);
+        }
+        parent.appendChild(elm);
+        if (tag.children) {
+          for (var i = 0; i < tag.children.length; i++) {
+            addToChildNodes(elm, tag.children[i]);
+          }
+        }
+      };
+      for (var i = 0; i < items.length; i++) {
+        addToChildNodes(this, items[i]);
+      }
+    };
+    P.toString = function (indent) {
+      var indent = indent || '';
+      var self = this;
+      return indent +
+        '<' + this.tagName +
+        (function () {
+          if (self.attributes.length === 0) {
+            return '';
+          } else {
+            var s = '';
+            for (var i = 0; i < self.attributes.length; i++) {
+              var attr = self.attributes.item(i);
+              s += ' ' + attr.name + '="' + attr.value + '"';
+            }
+            return s;
+          }
+        })() +
+        '>' +
+        (function () {
+          if (self.childNodes.length === 0) {
+            return '';
+          } else {
+            var s = '\n';
+            for (var i = 0; i < self.childNodes.length; i++) {
+              s += self.childNodes[i].toString('  ' + indent) + '\n';
+            }
+            return s + indent;
+          }
+        })() +
+        '</' + self.tagName + '>';
+    };
+  })(Element.prototype);
 
   var HTMLElement = QuDOM.HTMLElement = function HTMLElement() {
     Element.call(this);
@@ -168,7 +313,6 @@
   HTMLElement.prototype.constructor = HTMLElement;
   (function (P) {
   })(HTMLElement.prototype);
-
 
   var HTMLInputElement = QuDOM.HTMLInputElement = function HTMLInputElement() {
     HTMLElement.call(this);
@@ -201,31 +345,33 @@
   }
 
   var TAGS = [
-    "body"
+    "body", "span"
   ];
 
   var INPUT_TAGS = [
     "input"
   ];
 
+  function createElement(tagName, options) {
+    var tagName_ = (tagName || "").toLowerCase();
+    var elm;
+    if (contains(TAGS, tagName_)) {
+      elm = new HTMLElement();
+    } else if (contains(INPUT_TAGS, tagName_)) {
+      elm = new HTMLInputElement();
+    }
+    if (tagName) {
+      elm.nodeName = tagName;
+      elm.tagName = tagName.toLowerCase();
+    }
+    return elm;
+  }
+
   var Document = QuDOM.Document = function Document() {
     this.body = this.createElement("body");
   };
   (function (P) {
-    P.createElement = function (tagName, options) {
-      var tagName_ = (tagName || "").toLowerCase();
-      var elm;
-      if (contains(TAGS, tagName_)) {
-        elm = new HTMLElement();
-      } else if (contains(INPUT_TAGS, tagName_)) {
-        elm = new HTMLInputElement();
-      }
-      if (tagName) {
-        elm.nodeName = tagName;
-        elm.tagName = tagName.toLowerCase();
-      }
-      return elm;
-    };
+    P.createElement = createElement;
   })(Document.prototype);
 
   /******************************************************************
@@ -443,7 +589,7 @@
     TAG: 2,
   };
 
-  var Tag = function Tag(name, attrs, isEnd, isSingle, children, lv) {
+  var Tag = QuHtmlParser.Tag = function Tag(name, attrs, isEnd, isSingle, children, lv) {
     this.kind = NK.TAG;
     this.name = name;
     this.attrs = attrs;
@@ -451,8 +597,9 @@
     this.isSingle = isSingle;
     this.children = children;
     this.lv = lv;
-  }  
-  QuHtmlParser.Tag = Tag;
+  };
+  Tag.prototype = Object.create(Object.prototype);
+  Tag.prototype.constructor = Tag;
 
   var Body = function Body(text, lv) {
     this.kind = NK.BDY;

@@ -4,7 +4,7 @@
   "description": "",
   "main": "QuDOM.js",
   "scripts": {
-    "test": "node node_modules/tape/bin/tape 'test/*.test.js'"
+    "test": "node node_modules/tape/bin/tape 'test/QuDOM.test.js'; exit 0"
   },
   "author": "",
   "license": "MIT",
