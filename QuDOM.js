@@ -188,6 +188,55 @@
     };
   })(Attr.prototype);
 
+  var CharacterData = QuDOM.CharacterData = function CharacterData() {
+    Node.call(this);
+    this._data = "";
+  };
+  CharacterData.prototype = Object.create(Node.prototype, {
+    data: {
+      get: function () {
+        return this._data;
+      },
+      set: function (value) {
+        this._data = value;
+      }
+    },
+    length: {
+      get: function () {
+        return this._data.length;
+      }
+    },
+    nextElementSibling: {
+      get: function () {
+        throw new Error("Not implemented");
+      }
+    },
+    previousElementSibling: {
+      get: function () {
+        throw new Error("Not implemented");
+      }
+    },
+  });
+  CharacterData.prototype.constructor = CharacterData;
+  (function (P) {
+    P._data = null;
+    P.substringData = function(offset, count) {
+      return this._data.substr(offset, count);
+    };
+    P.appendData = function(data) {
+      this.replaceData(this._data.length, 0, data);
+    };
+    P.insertData = function(offset, data) {
+      this.replaceData(offset, 0, data);
+    };
+    P.deleteData = function(offset, count) {
+      this.replaceData(offset, count, "");
+    };
+    P.replaceData = function(offset, count, data) {
+      this._data = this._data.substr(0, offset) + data + this._data.substr(offset + count);
+    };
+  })(CharacterData.prototype);
+
   var Element = QuDOM.Element = function Element() {
     Node.call(this);
     this.innerHTML_ = "";
