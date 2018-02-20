@@ -237,6 +237,28 @@
     };
   })(CharacterData.prototype);
 
+  var Text = QuDOM.Text = function Text(data) {
+    CharacterData.call(this);
+    this.data = data || "";
+  };
+  Text.prototype = Object.create(CharacterData.prototype, {
+    wholeText: {
+      get: function () {
+        return this.data;
+      },
+    },
+  });
+  Text.prototype.constructor = Text;
+  (function (P) {
+    P.splitText = function(offset) {
+      throw new Error("Not implemented");
+    };
+    P.toString = function (indent) {
+      indent = indent || '';
+      return indent + this.wholeText;
+    };
+  })(Text.prototype);
+
   var Element = QuDOM.Element = function Element() {
     Node.call(this);
     this.innerHTML_ = "";
@@ -301,21 +323,27 @@
       
       var self = this;
       function addToChildNodes(parent, item) {
-        if (item.constructor !== Tag) return;
-        var tag = item;
-        var elm = createElement(tag.name);
-        for (var i = 0; i < tag.attrs.length; i++) {
-          var attr = tag.attrs[i];
-          var attr2 = new Attr();
-          attr2.name = attr.name;
-          attr2.value = attr.value;
-          elm.attributes.setNamedItem(attr2);
-        }
-        parent.appendChild(elm);
-        if (tag.children) {
-          for (var i = 0; i < tag.children.length; i++) {
-            addToChildNodes(elm, tag.children[i]);
+        if (item.constructor === Tag) {
+          var tag = item;
+          var elm = createElement(tag.name);
+          for (var i = 0; i < tag.attrs.length; i++) {
+            var attr = tag.attrs[i];
+            var attr2 = new Attr();
+            attr2.name = attr.name;
+            attr2.value = attr.value;
+            elm.attributes.setNamedItem(attr2);
           }
+          parent.appendChild(elm);
+          if (tag.children) {
+            for (var i = 0; i < tag.children.length; i++) {
+              addToChildNodes(elm, tag.children[i]);
+            }
+          }
+        }
+        else if (item.constructor === Body) {
+          var body = item;
+          var text = new Text(body.text);
+          parent.appendChild(text);
         }
       };
       for (var i = 0; i < items.length; i++) {

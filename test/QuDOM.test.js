@@ -16,7 +16,7 @@ test('QuDOM.HTMLInputElement.addEventListener', function (t) {
 test('QuDOM.HTMLElement.innerHTML', function (t) {
   var document = new QuDOM.Document();
   // document.body.innerHTML = '<span a1="v1" a2="v2" a3="v3"></span>';
-  document.body.innerHTML = '<span a1="v1"><span a2="v2"></span></span>';
+  document.body.innerHTML = '<span a1="v1">a<span a2="v2">b</span>c</span>';
   console.log(document.body.toString());
 
   t.end();
